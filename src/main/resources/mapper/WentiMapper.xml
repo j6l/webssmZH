@@ -1,0 +1,238 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jie.dao.WentiMapper">
+    <resultMap id="BaseResultMap" type="com.jie.entity.Wenti">
+        <id column="uuid" jdbcType="VARCHAR" property="uuid"/>
+        <result column="huati" jdbcType="VARCHAR" property="huati"/>
+        <result column="timu" jdbcType="VARCHAR" property="timu"/>
+        <result column="neirong" jdbcType="VARCHAR" property="neirong"/>
+        <result column="userid" jdbcType="VARCHAR" property="userid"/>
+        <result column="ctime" jdbcType="TIMESTAMP" property="ctime"/>
+    </resultMap>
+    <sql id="Example_Where_Clause">
+        <where>
+            <foreach collection="oredCriteria" item="criteria" separator="or">
+                <if test="criteria.valid">
+                    <trim prefix="(" prefixOverrides="and" suffix=")">
+                        <foreach collection="criteria.criteria" item="criterion">
+                            <choose>
+                                <when test="criterion.noValue">
+                                    and ${criterion.condition}
+                                </when>
+                                <when test="criterion.singleValue">
+                                    and ${criterion.condition} #{criterion.value}
+                                </when>
+                                <when test="criterion.betweenValue">
+                                    and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                                </when>
+                                <when test="criterion.listValue">
+                                    and ${criterion.condition}
+                                    <foreach close=")" collection="criterion.value" item="listItem" open="("
+                                             separator=",">
+                                        #{listItem}
+                                    </foreach>
+                                </when>
+                            </choose>
+                        </foreach>
+                    </trim>
+                </if>
+            </foreach>
+        </where>
+    </sql>
+    <sql id="Update_By_Example_Where_Clause">
+        <where>
+            <foreach collection="example.oredCriteria" item="criteria" separator="or">
+                <if test="criteria.valid">
+                    <trim prefix="(" prefixOverrides="and" suffix=")">
+                        <foreach collection="criteria.criteria" item="criterion">
+                            <choose>
+                                <when test="criterion.noValue">
+                                    and ${criterion.condition}
+                                </when>
+                                <when test="criterion.singleValue">
+                                    and ${criterion.condition} #{criterion.value}
+                                </when>
+                                <when test="criterion.betweenValue">
+                                    and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                                </when>
+                                <when test="criterion.listValue">
+                                    and ${criterion.condition}
+                                    <foreach close=")" collection="criterion.value" item="listItem" open="("
+                                             separator=",">
+                                        #{listItem}
+                                    </foreach>
+                                </when>
+                            </choose>
+                        </foreach>
+                    </trim>
+                </if>
+            </foreach>
+        </where>
+    </sql>
+    <sql id="Base_Column_List">
+    uuid, huati, timu, neirong, userid, ctime
+  </sql>
+    <select id="selectByExample" parameterType="com.jie.entity.WentiExample" resultMap="BaseResultMap">
+        select
+        <if test="distinct">
+            distinct
+        </if>
+        <include refid="Base_Column_List"/>
+        from wenti
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause"/>
+        </if>
+        <if test="orderByClause != null">
+            order by ${orderByClause}
+        </if>
+        <if test="limit != null">
+            <if test="offset != null">
+                limit ${offset}, ${limit}
+            </if>
+            <if test="offset == null">
+                limit ${limit}
+            </if>
+        </if>
+    </select>
+    <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from wenti
+        where uuid = #{uuid,jdbcType=VARCHAR}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from wenti
+    where uuid = #{uuid,jdbcType=VARCHAR}
+  </delete>
+    <delete id="deleteByExample" parameterType="com.jie.entity.WentiExample">
+        delete from wenti
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause"/>
+        </if>
+    </delete>
+    <insert id="insert" parameterType="com.jie.entity.Wenti">
+    insert into wenti (uuid, huati, timu, 
+      neirong, userid, ctime
+      )
+    values (#{uuid,jdbcType=VARCHAR}, #{huati,jdbcType=VARCHAR}, #{timu,jdbcType=VARCHAR}, 
+      #{neirong,jdbcType=VARCHAR}, #{userid,jdbcType=VARCHAR}, #{ctime,jdbcType=TIMESTAMP}
+      )
+  </insert>
+    <insert id="insertSelective" parameterType="com.jie.entity.Wenti">
+        insert into wenti
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="uuid != null">
+                uuid,
+            </if>
+            <if test="huati != null">
+                huati,
+            </if>
+            <if test="timu != null">
+                timu,
+            </if>
+            <if test="neirong != null">
+                neirong,
+            </if>
+            <if test="userid != null">
+                userid,
+            </if>
+            <if test="ctime != null">
+                ctime,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="uuid != null">
+                #{uuid,jdbcType=VARCHAR},
+            </if>
+            <if test="huati != null">
+                #{huati,jdbcType=VARCHAR},
+            </if>
+            <if test="timu != null">
+                #{timu,jdbcType=VARCHAR},
+            </if>
+            <if test="neirong != null">
+                #{neirong,jdbcType=VARCHAR},
+            </if>
+            <if test="userid != null">
+                #{userid,jdbcType=VARCHAR},
+            </if>
+            <if test="ctime != null">
+                #{ctime,jdbcType=TIMESTAMP},
+            </if>
+        </trim>
+    </insert>
+    <select id="countByExample" parameterType="com.jie.entity.WentiExample" resultType="java.lang.Long">
+        select count(*) from wenti
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause"/>
+        </if>
+    </select>
+    <update id="updateByExampleSelective" parameterType="map">
+        update wenti
+        <set>
+            <if test="record.uuid != null">
+                uuid = #{record.uuid,jdbcType=VARCHAR},
+            </if>
+            <if test="record.huati != null">
+                huati = #{record.huati,jdbcType=VARCHAR},
+            </if>
+            <if test="record.timu != null">
+                timu = #{record.timu,jdbcType=VARCHAR},
+            </if>
+            <if test="record.neirong != null">
+                neirong = #{record.neirong,jdbcType=VARCHAR},
+            </if>
+            <if test="record.userid != null">
+                userid = #{record.userid,jdbcType=VARCHAR},
+            </if>
+            <if test="record.ctime != null">
+                ctime = #{record.ctime,jdbcType=TIMESTAMP},
+            </if>
+        </set>
+        <if test="_parameter != null">
+            <include refid="Update_By_Example_Where_Clause"/>
+        </if>
+    </update>
+    <update id="updateByExample" parameterType="map">
+        update wenti
+        set uuid = #{record.uuid,jdbcType=VARCHAR},
+        huati = #{record.huati,jdbcType=VARCHAR},
+        timu = #{record.timu,jdbcType=VARCHAR},
+        neirong = #{record.neirong,jdbcType=VARCHAR},
+        userid = #{record.userid,jdbcType=VARCHAR},
+        ctime = #{record.ctime,jdbcType=TIMESTAMP}
+        <if test="_parameter != null">
+            <include refid="Update_By_Example_Where_Clause"/>
+        </if>
+    </update>
+    <update id="updateByPrimaryKeySelective" parameterType="com.jie.entity.Wenti">
+        update wenti
+        <set>
+            <if test="huati != null">
+                huati = #{huati,jdbcType=VARCHAR},
+            </if>
+            <if test="timu != null">
+                timu = #{timu,jdbcType=VARCHAR},
+            </if>
+            <if test="neirong != null">
+                neirong = #{neirong,jdbcType=VARCHAR},
+            </if>
+            <if test="userid != null">
+                userid = #{userid,jdbcType=VARCHAR},
+            </if>
+            <if test="ctime != null">
+                ctime = #{ctime,jdbcType=TIMESTAMP},
+            </if>
+        </set>
+        where uuid = #{uuid,jdbcType=VARCHAR}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.jie.entity.Wenti">
+    update wenti
+    set huati = #{huati,jdbcType=VARCHAR},
+      timu = #{timu,jdbcType=VARCHAR},
+      neirong = #{neirong,jdbcType=VARCHAR},
+      userid = #{userid,jdbcType=VARCHAR},
+      ctime = #{ctime,jdbcType=TIMESTAMP}
+    where uuid = #{uuid,jdbcType=VARCHAR}
+  </update>
+</mapper>
